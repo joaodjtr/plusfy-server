@@ -1,4 +1,4 @@
-import generateRandomString from "../helpers/generateRandomString"
+import {generateRandomString} from "../helpers/generateRandomString"
 import querystring from "querystring"
 import {Router} from 'express'
 import { authorizations, client_id, redirect_uri, stateKey } from "../utils/envs"

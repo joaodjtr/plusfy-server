@@ -28,7 +28,7 @@ routes.get('/callback', (req, res) => {
           redirect_uri: redirect_uri,
           grant_type: 'authorization_code'
         },
-        headers: {'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))},
+        headers: {'Authorization': 'Basic ' + (Buffer.from(client_id + ':' + client_secret).toString('base64'))},
         json: true
       }
   
