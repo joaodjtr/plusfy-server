@@ -10,12 +10,12 @@ export interface File{
 }
 
 export interface FileCreated{
-    fileName: string
+    file: File
     path: string | null
 }
 
 export interface Result{
-    fileName: string
+    file: File
     track: {
         id: string;
         title: string;

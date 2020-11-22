@@ -15,7 +15,7 @@ export const find = (req: Request, res: Response) => {
         mkdirIfNotExists(pathDir)
 
         // @ts-ignore
-        const writersPromises = req.files.map( (file: File) => new Promise(resolve => writeFile(pathDir, file, resolve)))
+        const writersPromises = req.files.map((file: File) => new Promise(resolve => writeFile(pathDir, file, resolve)))
 
         Promise.all<FileCreated>(writersPromises).then(filesCreated => {
             const resultsPromises = filesCreated.map(file => new Promise(resolve => handleGimme(file, resolve)))
@@ -36,13 +36,13 @@ export const find = (req: Request, res: Response) => {
             if(err){
                 responseError(err)
             }
-            callback({fileName: file.fieldname, path: `${path}${file.fieldname}` || null})
+            callback({file, path: `${path}${file.fieldname}` || null})
         }))
     }
     
     const handleGimme = (file: FileCreated, callback: (result: Result) => void) => {
         gimme(file.path || '', {}, (gimmeResult) => {
-            callback({fileName: file.fileName, track: gimmeResult?.track || null})
+            callback({file: file.file, track: gimmeResult?.track || null})
         })
     }
 }
