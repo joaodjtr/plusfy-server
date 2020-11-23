@@ -4,7 +4,8 @@ import fs from 'fs'
 import { generateRandomUploadPath } from '../helpers/generateRandomString'
 import { mkdirIfNotExists, unlinkDir } from '../helpers/manageUploadDir'
 import {gimme} from 'gimme-the-song'
-import {FileCreated, File, Result} from '../types'
+import {FileCreated, Result, MulterFile} from '../types'
+
 
 export const find = (req: Request, res: Response) => {
     const pathDir = generateRandomUploadPath()
@@ -14,8 +15,13 @@ export const find = (req: Request, res: Response) => {
         if(err) return responseError(err)
         mkdirIfNotExists(pathDir)
 
+
         // @ts-ignore
-        const writersPromises = req.files.map((file: File) => new Promise(resolve => writeFile(pathDir, file, resolve)))
+        const writersPromises = req.files.map(
+            (file: MulterFile) => 
+                new Promise(resolve => writeFile(pathDir, file, resolve)
+            ))
+        
 
         Promise.all<FileCreated>(writersPromises).then(filesCreated => {
             const resultsPromises = filesCreated.map(file => new Promise(resolve => handleGimme(file, resolve)))
@@ -24,6 +30,7 @@ export const find = (req: Request, res: Response) => {
                 unlinkDir(pathDir)
             }).catch(responseError)
         }).catch(responseError)
+
     })
 
     const responseError = (err: NodeJS.ErrnoException) => {
@@ -31,7 +38,7 @@ export const find = (req: Request, res: Response) => {
         return res.status(500).json({status: "error"})
     }
 
-    const writeFile = (path: string, file: File, callback: (fileCreated: FileCreated) => void) => {
+    const writeFile = (path: string, file: MulterFile, callback: (fileCreated: FileCreated) => void) => {
         fs.writeFile(`${path}${file.fieldname}`, file.buffer, {encoding: "ascii"}, (err => {
             if(err){
                 responseError(err)
@@ -39,7 +46,7 @@ export const find = (req: Request, res: Response) => {
             callback({file, path: `${path}${file.fieldname}` || null})
         }))
     }
-    
+
     const handleGimme = (file: FileCreated, callback: (result: Result) => void) => {
         gimme(file.path || '', {}, (gimmeResult) => {
             callback({file: file.file, track: gimmeResult?.track || null})

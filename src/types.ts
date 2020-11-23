@@ -1,21 +1,21 @@
 // findTrack Controller
 
-export interface File{
-    fieldname: string
-    originalname: string
-    encoding: string
-    mimetype: string
-    buffer: Buffer
-    size: number
+export interface MulterFile {
+    buffer: Buffer, 
+    encoding: string, 
+    fieldname: string, 
+    mimetype: string, 
+    originalname: string, 
+    size: number;
 }
 
 export interface FileCreated{
-    file: File
+    file: MulterFile
     path: string | null
 }
 
 export interface Result{
-    file: File
+    file: MulterFile
     track: {
         id: string;
         title: string;
