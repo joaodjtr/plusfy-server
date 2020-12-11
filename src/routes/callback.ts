@@ -36,6 +36,7 @@ routes.get('/callback', (req, res) => {
         if (!error && response.statusCode === 200) {
           const access_token = body.access_token
           const refresh_token = body.refresh_token
+          const expires_in = body.expires_in
 
           const optionsRequest = {
             url: 'https://api.spotify.com/v1/me',
@@ -51,6 +52,7 @@ routes.get('/callback', (req, res) => {
             res.redirect(`${client_redirect_url}/#` + querystring.stringify({
               access_token: access_token,
               refresh_token: refresh_token,
+              expires_in: expires_in,
               user_id: body.id
             }))
           })

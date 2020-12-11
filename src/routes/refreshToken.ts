@@ -4,13 +4,11 @@ import {client_id, client_secret} from "../utils/envs"
 const routes = Router()
 
 routes.get('/refresh_token', (req, res) => {
-    console.log(req.query.refresh_token)
-
     const refresh_token = req.query.refresh_token
     const authOptions = {
         url: "https://accounts.spotify.com/api/token",
         headers: {
-            Authorization: "Basic " + new Buffer(client_id + ":" + client_secret).toString("base64"),
+            Authorization: "Basic " + Buffer.from(client_id + ":" + client_secret).toString("base64"),
         },
         form: {
             grant_type: "refresh_token",
