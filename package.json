@@ -1,6 +1,7 @@
 {
   "name": "plusfy-server",
   "private": true,
+  "main": "dist/server.js",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
