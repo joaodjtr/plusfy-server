@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 export const mkdirIfNotExists = (pathDir: string) => {
-    if(!fs.existsSync(pathDir)) fs.mkdirSync(pathDir)
+    if(!fs.existsSync(pathDir)) fs.mkdirSync(pathDir, {recursive: true})
 }
 
 export const unlinkDir = (pathDir: string) => {

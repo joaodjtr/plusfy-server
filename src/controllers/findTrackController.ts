@@ -6,7 +6,6 @@ import { mkdirIfNotExists, unlinkDir } from '../helpers/manageUploadDir'
 import {gimme} from 'gimme-the-song'
 import {FileCreated, Result, MulterFile} from '../types'
 
-
 export const find = (req: Request, res: Response) => {
     const pathDir = generateRandomUploadPath()
     const upload = multer().any()
@@ -14,8 +13,7 @@ export const find = (req: Request, res: Response) => {
     upload(req, res, (err: any) => {
         if(err) return responseError(err)
         mkdirIfNotExists(pathDir)
-
-
+        
         // @ts-ignore
         const writersPromises = req.files.map(
             (file: MulterFile) => 
