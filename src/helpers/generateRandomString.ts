@@ -10,4 +10,6 @@ export const generateRandomString = (length: number) => {
   return text
 }
 
-export const generateRandomUploadPath = () => process.env.PATH_UPLOAD+crypto.randomFillSync(Buffer.alloc(10)).toString('hex')+Date.now().toString()+'/'
+export const generateRandomUploadPath = () => {
+  return __dirname+process.env.PATH_UPLOAD+crypto.randomFillSync(Buffer.alloc(10)).toString('hex')+Date.now().toString()+'/'
+}

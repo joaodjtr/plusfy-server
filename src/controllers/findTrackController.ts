@@ -12,6 +12,7 @@ export const find = (req: Request, res: Response) => {
 
     upload(req, res, (err: any) => {
         if(err) return responseError(err)
+        console.log(pathDir)
         mkdirIfNotExists(pathDir)
         
         // @ts-ignore
