@@ -10,7 +10,7 @@ import findTrack from './routes/findTrack'
 import { PORT } from './utils/envs'
 import {setGimmeKey} from 'gimme-the-song'
 
-setGimmeKey(process.env.GIMME_KEY || '')
+// setGimmeKey(process.env.GIMME_KEY || '')
 
 const app = express()
 

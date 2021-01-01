@@ -29,6 +29,7 @@
   "scripts": {
     "dev": "nodemon",
     "dev-prod": "tsc && cross-env NODE_ENV=production node dist/server.js",
+    "local": "yarn build && heroku local",
     "build": "tsc",
     "start": "node dist/server.js"
   },
