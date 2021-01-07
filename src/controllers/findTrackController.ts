@@ -1,7 +1,7 @@
 import {Request, Response} from 'express'
 import multer from 'multer'
 import fs from 'fs'
-import { generateRandomUploadPath } from '../helpers/generateRandomString'
+import { generateRandomString, generateRandomUploadPath } from '../helpers/generateRandomString'
 import { mkdirIfNotExists, unlinkDir } from '../helpers/manageUploadDir'
 import {gimme} from 'gimme-the-song'
 import {FileCreated, Result, MulterFile} from '../types'
@@ -32,16 +32,17 @@ export const find = (req: Request, res: Response) => {
     })
 
     const responseError = (err: NodeJS.ErrnoException) => {
-        console.error(err)
         return res.status(500).json({status: "error"})
     }
 
     const writeFile = (path: string, file: MulterFile, callback: (fileCreated: FileCreated) => void) => {
-        fs.writeFile(`${path}${file.fieldname}`, file.buffer, {encoding: "ascii"}, (err => {
+        const filePath = `${path}${generateRandomString(16)}`
+        
+        fs.writeFile(filePath, file.buffer, {encoding: "ascii"}, (err => {
             if(err){
                 responseError(err)
             }
-            callback({file, path: `${path}${file.fieldname}` || null})
+            callback({file, path: filePath || null})
         }))
     }
 
