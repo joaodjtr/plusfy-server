@@ -32,8 +32,5 @@
     "local": "yarn build && heroku local",
     "build": "tsc",
     "start": "node dist/server.js"
-  },
-  "engines": {
-    "node": "12.16.2"
   }
 }
